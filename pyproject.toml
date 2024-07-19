@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=61.0.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "rest_sketch"
+version = "0.0.1"
+description = "REST API client"
+readme = "README.md"
+authors = [{ name = "Sergei Konovalov", email = "l0kifs91@gmail.com" }]
+dependencies = [
+    "pydantic~=2.8.2",
+    "requests~=2.32.3",
+]
+requires-python = ">=3.11"
+
+[project.optional-dependencies]
+dev = ["pip-tools", "pytest"]
+
+[project.urls]
+Homepage = "https://github.com/l0kifs/rest_sketch"
