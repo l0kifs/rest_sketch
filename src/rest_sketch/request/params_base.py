@@ -26,9 +26,9 @@ class ParamsBase(ABC):
     The class should define attributes that are instances of Param.
 
     Example:
-    class SomeParams(ParamsBase):
-    def __init__(self):
-        self.param1 = Param(key="param", optional=False, value="value1")
+        class SomeParams(ParamsBase):
+            def __init__(self):
+                self.param1 = Param(key="param", optional=False, value="value1")
     """
     def to_dict(self) -> dict:
         """

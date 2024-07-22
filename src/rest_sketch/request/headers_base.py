@@ -18,6 +18,18 @@ class Header:
 
 
 class HeadersBase(ABC):
+    """
+    Represents the headers of a request.
+
+    The class should be extended to define the headers of a request.
+
+    The class should define attributes that are instances of Header.
+
+    Example:
+        class SomeHeaders(HeadersBase):
+            def __init__(self):
+                self.header1 = Header(key="header1", optional=False, value="value1")
+    """
     def to_dict(self) -> dict:
         """
         Converts the headers to a dictionary
