@@ -45,24 +45,24 @@ class RequestBase(ABC):
         return self.get_http_repr()
 
     def get_http_repr(self) -> str:
-        request = f"{self.method.value} {self.base_url}{self.endpoint}"
+        http_request = f"{self.method.value} {self.base_url}{self.endpoint}"
         if self.params:
-            request += "?" + "&".join([f"{key}={value}" for key, value in self.params.to_dict().items()])
+            http_request += "?" + "&".join(f"{key}={value}" for key, value in self.params.to_dict().items())
         if self.headers:
-            request += "\n" + "\n".join([f"{key}: {value}" for key, value in self.headers.to_dict().items()])
+            http_request += "\n" + "\n".join(f"{key}: {value}" for key, value in self.headers.to_dict().items())
         if self.body:
-            request += "\n\n" + self.body.model_dump_json() if self.body and isinstance(self.body, BaseModel) else self.body
-        return request
+            http_request += "\n\n" + (self.body.model_dump_json() if self.body and isinstance(self.body, BaseModel) else self.body)
+        return http_request
 
     def get_curl_repr(self) -> str:
-        request = f"curl -X {self.method.value} {self.base_url}{self.endpoint}"
+        curl_request = f"curl -X {self.method.value} {self.base_url}{self.endpoint}"
         if self.params:
-            request += "?" + "&".join([f"{key}={value}" for key, value in self.params.to_dict().items()])
+            curl_request += "?" + "&".join(f"{key}={value}" for key, value in self.params.to_dict().items())
         if self.headers:
-            request += " -H " + " -H ".join([f'"{key}: {value}"' for key, value in self.headers.to_dict().items()])
+            curl_request += " -H " + " -H ".join(f'"{key}: {value}"' for key, value in self.headers.to_dict().items())
         if self.body:
-            request += f" -d '{self.body.model_dump_json() if self.body and isinstance(self.body, BaseModel) else self.body}'"
-        return request
+            curl_request += f" -d '{self.body.model_dump_json() if self.body and isinstance(self.body, BaseModel) else self.body}'"
+        return curl_request
 
     def get_raw_request(self) -> RawRequest:
         return RawRequest(
