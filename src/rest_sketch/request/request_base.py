@@ -51,7 +51,7 @@ class RequestBase(ABC):
         if self.headers:
             request += "\n" + "\n".join([f"{key}: {value}" for key, value in self.headers.to_dict().items()])
         if self.body:
-            request += "\n\n" + self.body.model_dump_json()
+            request += "\n\n" + self.body.model_dump_json() if self.body and isinstance(self.body, BaseModel) else self.body
         return request
 
     def get_curl_repr(self) -> str:
@@ -61,7 +61,7 @@ class RequestBase(ABC):
         if self.headers:
             request += " -H " + " -H ".join([f'"{key}: {value}"' for key, value in self.headers.to_dict().items()])
         if self.body:
-            request += f" -d '{self.body.model_dump_json()}'"
+            request += f" -d '{self.body.model_dump_json() if self.body and isinstance(self.body, BaseModel) else self.body}'"
         return request
 
     def get_raw_request(self) -> RawRequest:
